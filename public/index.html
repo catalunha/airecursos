@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>AI-Recursos</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+  <div id="box">
+    Calculo de probabilidades da curva normal - Gauss
+    <div id='canvas'>
+      <canvas id="normalCanvas" width="320" height="300"></canvas>
+    </div>
+    <form name="form1">
+      <div id="inverse">
+        <br /><br />Curva Inversa - Informe os valores:
+        <table>
+          <tr>
+            <td>Média</td>
+            <td><input name="mean" type="text" id="meanInverse" value="0" onchange="inverse()"
+                onclick="this.select()" />
+            </td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>Desvio Padrão</td>
+            <td> <input name="sd" type="text" id="sdInverse" value="1" onchange="inverse()" onclick="this.select()" />
+            </td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>Área</td>
+            <td> <input name="p" type="text" id="pInverse" value="0.025" onchange="inverse()" onclick="this.select()" />
+            </td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>Resultado:</td>
+            <td><input type="button" value="reCalcular" onclick="inverse()" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><input name="areaInverse" type="radio" id="abovea1" checked="checked" onclick="inverse()" /> Abaixo</td>
+            <td> <input type="text" name="above1" id="aboveInverse" readonly /> </label></td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td><input name="areaInverse" type="radio" id="belowa1" onclick="inverse()" readonly /> Acima</td>
+            <td><input type="text" name="above1" id="belowInverse" readonly /> </label></td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td><input name="areaInverse" type="radio" id="betweena1" onclick="inverse()" /> Interna</td>
+            <td><input type="text" name="above1" id="betweenInverse" readonly /> </label></td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td><input name="areaInverse" type="radio" id="outside1" onclick="inverse()" /> Externa</td>
+            <td><input type="text" name="above1" id="outsideInverse" readonly /></td>
+            <td>...</td>
+          </tr>
+        </table>
+      </div>
+      <div id="direta">
+        <br /><br />Curva Direta - Informe os valores:
+        <table>
+          <tr>
+            <td>Média:</td>
+            <td> <input type="text" id="mean" value="0" onchange="draw2()" onclick="this.select()"></td>
+            <td>...</td>
+          </tr>
+          <td>Desvio padrão:</td>
+          <td><input type="text" id="sd" value="1" onchange="draw2()" onclick="this.select()"></td>
+          <td>...</td>
+          </tr>
+          <tr>
+            <td> <input type="radio" name="area" id="aboveRadio" checked="checked" onclick="draw2()">x[</td>
+            <td> <input type="text" id="above" value="2" onchange="draw2()" onclick="this.select()"></td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td> <input type="radio" name="area" id="belowRadio" onclick="draw2()">]x</td>
+            <td> <input type="text" id="below" value="-2" onchange="draw2()" onclick="this.select()"></td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td> <input type="radio" name="area" id="betweenRadio" onclick="draw2()">[x]</td>
+            <td> <input type="text" id="ll" value="-2" onchange="draw2()" onclick="this.select()">
+              [x]
+              <input type="text" id="ul" value="2" onchange="draw2()" onclick="this.select()"></td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td> <input type="radio" name="area" id="outsideRadio" onclick="draw2()">]x[</td>
+            <td> <input type="text" id="oll" value="-2" onchange="draw2()" onclick="this.select()">
+              ]x[
+              <input type="text" id="oul" value="2" onchange="draw2()" onclick="this.select()"></td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>Resultado:</td>
+            <td><input type="button" value="reCalcular" onclick="draw2()"></td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>Área</td>
+            <td><input type="text" id="p" readonly></td>
+            <td>...</td>
+          </tr>
+        </table>
+      </div>
+    </form>
+  </div>
+  <script src="./main.js"></script>
+</body>
+
+</html>

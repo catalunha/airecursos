@@ -1,0 +1,26 @@
+#canvas {
+  float: left;
+  width: 25%;
+  height: 280px;
+}
+
+#direta {
+  float: left;
+  width: 25%;
+  height: 280px;
+}
+
+#inverse {
+  float: left;
+  width: 25%;
+  height: 280px;
+
+}
+
+input[type="text"] {
+  width: 75px;
+}
+
+table {
+  border: "0";
+}
