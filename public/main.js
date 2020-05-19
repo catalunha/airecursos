@@ -166,7 +166,7 @@ function inverse() {
     ll = Math.round((M + sd * ll) * 1000) / 1000
     ul = Math.round((M + sd * ul) * 1000) / 1000
     drawNormal(ctx, box, M, sd, ll, ul, tail)
-    document.getElementById("betweenInverse").value = ll + " [x] " + ul
+    document.getElementById("betweenInverse").value = ll + " <Z/X< " + ul
   }
   else if (document.form1.areaInverse[3].checked) {
     /*var p2=p/2
@@ -182,7 +182,7 @@ function inverse() {
     ll = Math.round((M + sd * ll) * 1000) / 1000
     ul = Math.round((M + sd * ul) * 1000) / 1000
     drawNormal(ctx, box, M, sd, ll, ul, true)
-    document.getElementById("outsideInverse").value = ll + " ]x[ " + ul
+    document.getElementById("outsideInverse").value = ll + " >Z/X> " + ul
   }
 }
 function drawNormal(ctx, box, M, sd, lFill, hFill, tail) {

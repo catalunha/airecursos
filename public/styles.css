@@ -1,20 +1,12 @@
 #canvas {
   float: left;
-  width: 25%;
-  height: 280px;
 }
-
-#direta {
-  float: left;
-  width: 25%;
-  height: 280px;
-}
-
 #inverse {
   float: left;
-  width: 25%;
-  height: 280px;
-
+  padding-right: 20px;
+}
+#direta {
+  float: left;
 }
 
 input[type="text"] {
