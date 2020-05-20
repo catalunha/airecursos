@@ -54,24 +54,23 @@ div#direta+table {
   float: left;
 }
 
-/* input[type="text"] {
-  width: 75px;
-} */
+input[type="button"] {
+  cursor: pointer;
+}
 
 form input {
   height: 20px;
   width: 80px;
-  color: #333;
   border: 1px solid #dcdce6;
   border-radius: 8px;
   padding: 0 2px;
   text-align: center;
-  cursor: pointer;
 }
 
 form input.result {
   background-color: yellow;
   font-weight: 700;
+  cursor: copy;
 }
 
 form button {
