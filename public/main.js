@@ -96,20 +96,20 @@ function draw2() {
   var M = parseFloat(document.getElementById("mean").value)
   var sd = parseFloat(document.getElementById("sd").value)
   var tail = false
-  if (document.form1.area[0].checked) {
+  if (document.form.area[0].checked) {
     ll = parseFloat(document.getElementById("above").value)
     ul = 999999
     z = (M - ll) / sd
     pField.value = Math.round(zProb(z) * 10000) / 10000
   }
-  else if (document.form1.area[1].checked) {
+  else if (document.form.area[1].checked) {
     ul = parseFloat(document.getElementById("below").value)
     ll = -999999
     z = (M - ul) / sd
     var p = 1 - zProb(z)
     pField.value = Math.round(p * 10000) / 10000
   }
-  else if (document.form1.area[2].checked) {
+  else if (document.form.area[2].checked) {
     ll = parseFloat(document.getElementById("ll").value)
     ul = parseFloat(document.getElementById("ul").value)
     z1 = (ll - M) / sd
@@ -117,7 +117,7 @@ function draw2() {
     zp = zProb(z2) - zProb(z1)
     pField.value = Math.round(zp * 10000) / 10000
   }
-  else if (document.form1.area[3].checked) {
+  else if (document.form.area[3].checked) {
     tail = true
     ll = parseFloat(document.getElementById("oll").value)
     ul = parseFloat(document.getElementById("oul").value)
@@ -142,7 +142,7 @@ function inverse() {
   var p = parseFloat(document.getElementById("pInverse").value)
   var x1 = zinv(p)
   x1 = M + sd * x1
-  if (document.form1.areaInverse[0].checked) {
+  if (document.form.areaInverse[0].checked) {
     x1 = zinv(p)
     x1 = -M + sd * x1
     ul = M + 3.1 * sd
@@ -151,14 +151,14 @@ function inverse() {
     ll = Math.round(1000 * ll) / 1000
     document.getElementById("aboveInverse").value = ll
   }
-  else if (document.form1.areaInverse[1].checked) {
+  else if (document.form.areaInverse[1].checked) {
     ll = M - 3.1 * sd
     ul = x1
     drawNormal(ctx, box, M, sd, ll, ul, tail)
     ul = Math.round(1000 * ul) / 1000
     document.getElementById("belowInverse").value = ul
   }
-  else if (document.form1.areaInverse[2].checked) {
+  else if (document.form.areaInverse[2].checked) {
     var p2 = p / 2
     x1 = zinv(.5 - p2)
     ll = x1
@@ -166,9 +166,9 @@ function inverse() {
     ll = Math.round((M + sd * ll) * 1000) / 1000
     ul = Math.round((M + sd * ul) * 1000) / 1000
     drawNormal(ctx, box, M, sd, ll, ul, tail)
-    document.getElementById("betweenInverse").value = ll + " <Z/X< " + ul
+    document.getElementById("betweenInverse").value = ll + " e " + ul
   }
-  else if (document.form1.areaInverse[3].checked) {
+  else if (document.form.areaInverse[3].checked) {
     /*var p2=p/2
     x1=zinv(p2)
     ll=x1
@@ -182,7 +182,7 @@ function inverse() {
     ll = Math.round((M + sd * ll) * 1000) / 1000
     ul = Math.round((M + sd * ul) * 1000) / 1000
     drawNormal(ctx, box, M, sd, ll, ul, true)
-    document.getElementById("outsideInverse").value = ll + " >Z/X> " + ul
+    document.getElementById("outsideInverse").value = ll + " e " + ul
   }
 }
 function drawNormal(ctx, box, M, sd, lFill, hFill, tail) {

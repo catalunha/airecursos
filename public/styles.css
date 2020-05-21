@@ -1,57 +1,47 @@
-* {
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-size: 12px;
   font-family: monospace;
-  margin: 0;
-  padding: 0;
-  outline: 0;
-  box-sizing: border-box;
 }
 
-/* div#box {
-  width: 100%;
-  max-width: 1120px;
-  margin: 0 auto;
+.normal {
   display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+}
 
-}
-div#canvas {
-  width: 100%;
-  max-width: 320px;
-  margin: 0 auto;
+/* .normal .body {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-div#inverse+table {
-  width: 100%;
-  max-width: 320px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-div#direta+table {
-  width: 100%;
-  max-width: 320px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
 } */
-
-#canvas {
-  float: left;
+.normal .body, form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-#inverse {
-  float: left;
-  padding-right: 20px;
+.normalProb, .normalZ {
+  margin: 10px;
 }
 
-#direta {
-  float: left;
+.form-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.calcular {
+  width: 100%;
+}
+
+.header {
+  background: tomato;
 }
 
 input[type="button"] {
@@ -73,16 +63,10 @@ form input.result {
   cursor: copy;
 }
 
-form button {
-  width: 80px;
-  height: 20px;
-  background: #e02041;
-  border: 0;
-  border-radius: 8px;
-  text-align: center;
-  text-decoration: none;
-}
-
-table {
-  border: "0";
+@media all and (max-width: 800px) {
+  .normal .body, form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
 }
