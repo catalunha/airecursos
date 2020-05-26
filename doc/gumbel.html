@@ -1,0 +1,66 @@
+<HTML>                                                           
+<HEAD>
+<title>JavaScript - Gumbel Distribution Function</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- hide this script tag's contents from old browsers
+
+function compute(form) {
+    X=eval(form.argument.value)
+    Theta=eval(form.theta.value)
+    B=eval(form.sigma.value)
+    with (Math) {
+		if (B<=0) {
+			alert("Scale parameter must be positive")
+		} else {
+			Z=Theta+B*X;  
+			gumbcdf=exp(-exp(-Z));
+			gumbcdf=round(gumbcdf*100000)/100000;
+		}
+	}
+    form.result.value = gumbcdf;
+}
+// done hiding from old browsers -->
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<center>
+<hr size=5>
+<h1>Gumbel Distribution Function</h1>
+<i>JavaScript</i>
+<hr size=5>
+
+<FORM>
+<pre>
+      Enter Gumbel Distribution Arguments
+
+           x-value: <INPUT TYPE="text" NAME="argument" Value="0" SIZE=15>
+location parameter: <INPUT TYPE="text" NAME="theta" Value="0" SIZE=15>
+   scale parameter: <INPUT TYPE="text" NAME="sigma" Value="1" SIZE=15>
+</pre>
+
+<BR>
+ Gumbel Probability :
+<INPUT TYPE="text" NAME="result" SIZE=20>
+<INPUT TYPE="button" VALUE="Calculate" ONCLICK="compute(this.form)">
+<BR>
+</FORM>
+<hr>
+If M<sub>n</sub> is the maximum of a sample of size n<br>
+from the exponential distribution E(1), then the distribution<br>
+of M<sub>n</sub> - log(n) converges to the Gumbel(0,1) distribution.<br>
+The Gumbel(0,1) distribution has density on the whole real line.
+<p>
+f(x) = exp{-e<sup>-x</sup>-x} 
+<p>
+and distribution function
+<p>
+F(x) = exp{-e<sup>-x</sup>}.
+<p>
+For example, Gumbel(0,0,1) = 1/e = .36788
+ 
+</center>
+</BODY>
+</HTML>
+

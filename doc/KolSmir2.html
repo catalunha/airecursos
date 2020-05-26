@@ -1,0 +1,141 @@
+<HTML>                                                           
+<HEAD>
+<title>Kolmogorov-Smirnov Two-Sample Test</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- hide this script tag's contents from old browsers
+
+var u=[];
+
+function lcm(m,n) {       //m,n must be positive integers
+    var k,mn;
+    mn=m*n;
+    while (m>0) {
+    	k=n%m;
+		n=m;
+		m=k
+    }
+    return mn/n
+}
+
+function smircdf(d,m,n) {   //Kim-Jennrich algorithm
+    var c,w;
+    c=m*n*d+.0000001;
+	u[1]=1;
+	for(var j=1;j<=n;j++) {
+		if (m*j>c) {
+			u[j+1]=0
+		} else {
+			u[j+1]=1
+		}
+	}
+	for(var i=1;i<=m;i++) {
+	    w=i/(i+n)
+		if (n*i>c) {
+			u[1]=0
+		} else {
+			u[1]=w*u[1]
+		}
+		for(j=1;j<=n;j++) {
+			if (Math.abs(n*i-m*j)>c) {
+				u[j+1]=0
+			} else {
+				u[j+1]=u[j]+u[j+1]*w
+			}
+		}
+	}
+    return u[n+1]
+}
+
+function kolsmir(z) {   //Kolmogorov-Smirnov distribution. Error<.0000001
+	var ks,y,i;
+	ks=.5;
+	if (z>.27) {
+		ks=0;
+		y=-2*z*z;
+		for(i=27;i>=1;i=i-2) {
+			ks=Math.exp(i*y)*(1-ks)
+		}
+	}
+	return 1-2*ks
+}
+
+
+function compute(form) {
+    var Prob,klcm;
+    x=eval(form.argument.value);
+    m=Math.floor(eval(form.sample1.value));
+    n=Math.floor(eval(form.sample2.value));
+    if ((n<1)||(m<1)) {
+    	alert("m and n must be positive integers");
+    }
+    klcm=lcm(m,n);
+    d=Math.floor(x*klcm)/klcm;
+	if (x<=0) {
+		Prob=0
+	} else if (x>=1) {
+		Prob=1
+	} else if (m>n) {
+		Prob=smircdf(d,n,m)
+	} else {
+        Prob=smircdf(d,m,n)
+	}
+	Prob=Math.round(Prob*100000)/100000;
+    form.result.value = Prob;
+    if (m==n) {
+        z=Math.sqrt(m*n/(m+n))*(d+1/m)
+    } else {
+        z=Math.sqrt(m*n/(m+n))*(d+1/(m+n))
+    }
+    appr=kolsmir(z);
+	appr=Math.round(appr*100000)/100000;
+	form.approx.value = appr
+}
+
+// done hiding from old browsers -->
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<center>
+<hr size=5>
+<h1>The Kolmogorov-Smirnov Two-Sample Test</h1>
+<i>JavaScript</i>
+<hr size=5>
+Given a sample of size m from distribution function, F,<br> 
+and a sample of size n from distribution function, G,<br>
+the Smirnov test tests the null hypothesis that F=G.<br>
+The Smirnov test statistic is 
+D<sub>m,n</sub> = sup<sub>x</sub>|F<sub>m</sub>(x)-G<sub>n</sub>(x)|,<br>
+where F<sub>m</sub> and G<sub>n</sub> are the respective sample distribution functions.<br>
+D<sub>m,n</sub> only takes values i/k for i=1,2,...,k, where k=lcm(m,n).<br>
+
+<hr>
+
+<FORM>
+<pre>
+      Enter m and n and the cutoff point.
+
+    Sample size m: <INPUT TYPE="text" NAME="sample1" Value="100" SIZE=15>
+    Sample size n: <INPUT TYPE="text" NAME="sample2" Value="100" SIZE=15>
+          x-value: <INPUT TYPE="text" NAME="argument" Value=".1" SIZE=15>
+<BR>
+<INPUT TYPE="button" VALUE="Calculate" ONCLICK="compute(this.form)">
+<BR>
+   P(D<sub>m,n</sub> <= x) : <INPUT TYPE="text" NAME="result" SIZE=20>
+  Approximation: <INPUT TYPE="text" NAME="approx" SIZE=20>
+</pre>
+</FORM>
+<hr>
+Exact probabilities for D<sub>m,n</sub> are calculated.
+For example, P(D<sub>100,100</sub> <= .1) = .41699.<br> 
+If both m and n tend to infinity, the distribution of 
+&radic;((m+n)/mn)D<sub>m,n</sub> approaches the Kolgomorov<br>
+distribution but convergence is very slow. To see why, compute the same probability<br>
+for m=101 and n=100 (or x=.0999999). The approximation used here employs an ad-hoc<br>
+correction for continuity. The running time for the exact computation is proportional<br>
+to m times n, so take care if m times n is large (> 1,000,000 say).
+</center>
+</BODY>
+</HTML>
+

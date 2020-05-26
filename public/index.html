@@ -10,6 +10,37 @@
 <body>
   <div class="container">
 
+    <div class="normal">
+      <header>
+        <h2>Distribuição t</h2>
+        <small> Recurso de calculadora em versão beta. Prof Catalunha.</small>
+      </header>
+      <div class='tdistCanvas'>
+        <canvas id="tdistCanvas" width="320" height="300"></canvas>
+      </div>
+
+      <form name="formTDist">
+        <div class="tDist">
+          <h4>Calcular p/Área/Prob - Informe os valores:</h4>
+          <div class="form-item">
+            <label for="xvalue">valor de X:</label>
+            <input type="text" id="xvalue" value="1">
+          </div>
+
+          <div class="form-item">
+            <label for="df">Graus de liberdade:</label>
+            <input type="text" id="df" value="1" >
+          </div>
+
+          <input type="button" class="calcular" value="reCalcular" onclick="compute(this.form)">
+          <div class="form-item">
+            <label for="pTDist">p/Área/Prob.</label>
+            <input type="text" id="pTDist" readonly class="result">
+          </div>
+        </div>
+      </form>
+    </div>
+
 
     <div class="normal">
       <header>
@@ -107,7 +138,8 @@
       </div>
     </div>
   </div>
-  <script src="./main.js"></script>
+  <script src="./normal.js"></script>
+  <script src="./tdist.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,70 @@
+<HTML>                                                           
+<HEAD>
+<title>Kolmogorov Distribution</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+function kolmogorov(z) {   //Kolmogorov distribution. Error<.0000001
+	var ks,y,i;
+	if (z<.27) {
+		return 0
+	} else if (z>3.2) {
+		return 1
+	} else {
+		ks=0;
+		y=-2*z*z;
+		for(i=27;i>=1;i=i-2) {
+			ks=Math.exp(i*y)*(1-ks)
+		}
+	    return 1-2*ks
+	}
+}
+
+function compute(form) {
+    var Prob;
+    x=eval(form.argument.value);
+    Prob=kolmogorov(x)
+	Prob=Math.round(Prob*100000)/100000;
+    form.result.value = Prob;
+}
+
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<center>
+<hr size=5>
+<h1>The Kolmogorov Distribution</h1>
+<i>JavaScript</i>
+<hr size=5>
+The Kolmogorov distribution has distribution function<br>
+<img src="Kol.gif" alt="kolmogorov distribution function"><br>
+For a sample of size n from a continuous distribution function F(x),<br>
+K(x) is the limiting distribution of &radic;n 
+sup<sub>x</sub>|F<sub>n</sub>(x)-F(x)|, where F<sub>n</sub>(x) is the 
+sample distribution function.<br> 
+For the two-sample problem with a sample of size m from F(x) and a sample 
+of size n from G(x),<br>
+K(x) is also the limiting distribution of 
+&radic;((m+n)/mn) sup<sub>x</sub>|F<sub>m</sub>(x)-G<sub>n</sub>(x)| under 
+the null hypothesis H<sub>0</sub>: F=G.
+<hr>
+
+<FORM>
+<pre>
+      Enter the cutoff point.
+
+          x-value: <INPUT TYPE="text" NAME="argument" Value="1" SIZE=15>
+<BR>
+<INPUT TYPE="button" VALUE="Calculate" ONCLICK="compute(this.form)">
+<BR>
+   K(x) : <INPUT TYPE="text" NAME="result" SIZE=20>
+</pre>
+</FORM>
+<hr>
+For example, K(1) = 0.73.  The computation is accurate to .000005.
+
+</center>
+</BODY>
+</HTML>
+

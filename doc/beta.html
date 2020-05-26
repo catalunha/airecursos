@@ -1,0 +1,116 @@
+<HTML>                                                           
+<HEAD>
+<title>JavaScript - Beta Distribution Function</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- hide this script tag's contents from old browsers
+function LogGamma(Z) {
+	with (Math) {
+		var S=1+76.18009173/Z-86.50532033/(Z+1)+24.01409822/(Z+2)-1.231739516/(Z+3)+.00120858003/(Z+4)-.00000536382/(Z+5);
+		var LG= (Z-.5)*log(Z+4.5)-(Z+4.5)+log(S*2.50662827465);
+	}
+	return LG
+}
+
+function Betinc(X,A,B) {
+	var A0=0;
+	var B0=1;
+	var A1=1;
+	var B1=1;
+	var M9=0;
+	var A2=0;
+	var C9;
+	while (Math.abs((A1-A2)/A1)>.00001) {
+		A2=A1;
+		C9=-(A+M9)*(A+B+M9)*X/(A+2*M9)/(A+2*M9+1);
+		A0=A1+C9*A0;
+		B0=B1+C9*B0;
+		M9=M9+1;
+		C9=M9*(B-M9)*X/(A+2*M9-1)/(A+2*M9);
+		A1=A0+C9*A1;
+		B1=B0+C9*B1;
+		A0=A0/B1;
+		B0=B0/B1;
+		A1=A1/B1;
+		B1=1;
+	}
+	return A1/A
+}
+
+function compute(form) {
+    Z=eval(form.argument.value)
+    A=eval(form.alpha.value)
+    B=eval(form.beta.value)
+    with (Math) {
+		if (A<=0) {
+			alert("alpha must be positive")
+		} else if (B<=0) {
+			alert("beta must be positive")
+		} else if (Z<=0) {
+			Betacdf=0
+		} else if (Z>=1) {
+			Betacdf=1
+		} else {
+			S=A+B;
+			BT=exp(LogGamma(S)-LogGamma(B)-LogGamma(A)+A*log(Z)+B*log(1-Z));
+			if (Z<(A+1)/(S+2)) {
+				Betacdf=BT*Betinc(Z,A,B)
+			} else {
+				Betacdf=1-BT*Betinc(1-Z,B,A)
+			}
+		}
+		Betacdf=Betacdf+.000005
+		s=" "+Betacdf
+		s=s.substr(0,8);
+	}
+    form.result.value = s;
+}
+// done hiding from old browsers -->
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<center>
+<hr size=5>
+<h1>Beta Distribution Function</h1>
+<i>JavaScript</i>
+<hr size=5>
+<FORM>
+<pre>
+      ENTER BETA CDF ARGUMENTS
+
+          x-value: <INPUT TYPE="text" NAME="argument" Value=".5" SIZE=15>
+            &alpha;: <INPUT TYPE="text" NAME="alpha" Value="1" SIZE=15>
+            &beta;: <INPUT TYPE="text" NAME="beta" Value="1" SIZE=15>
+</pre>
+
+<BR>
+ BETA Probability :
+<INPUT TYPE="text" NAME="result" SIZE=20>
+<INPUT TYPE="button" VALUE="Calculate" ONCLICK="compute(this.form)">
+<BR>
+</FORM>
+<hr>
+The Beta distribution with parameters &alpha;
+and &beta; is denoted by Be(&alpha;,&beta;).<br>  
+The distribution function of the Be(&alpha;, &beta;) 
+distribution is denoted by Be(x | &alpha;, &beta;).<br>
+For example, Be(.5 | 1,1)=.5.<br>
+The density of the Be(&alpha;,&beta;) distribution is<p>
+
+f(x) = B(&alpha;,&beta;)<sup>-1</sup> x<sup>&alpha;-1</sup>(1-x)<sup>&beta;-1</sup> on the interval (0,1).<p> 
+
+Here B(&alpha;,&beta;) represents the beta function, 
+G(&alpha;)G(&beta;)/G(&alpha;+&beta;),<br> 
+where G(x) is the gamma function. 
+The Be(1,1) distribution is the uniform distribution, U(0,1).<br>  
+The distribution of the kth order statistic of a sample 
+of size n from the U(0,1) distribution is Be(k,n+1-k).
+
+
+
+
+</center>
+</BODY>
+</HTML>
+

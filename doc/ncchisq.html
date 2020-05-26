@@ -1,0 +1,103 @@
+<HTML>                                                           
+<HEAD>
+<title>JavaScript - NonCentral ChiSquare Distribution Function</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- hide this script tag's contents from old browsers
+function LogGamma(Z) {
+	with (Math) {
+		var S=1+76.18009173/Z-86.50532033/(Z+1)+24.01409822/(Z+2)-1.231739516/(Z+3)+.00120858003/(Z+4)-.00000536382/(Z+5);
+		var LG= (Z-.5)*log(Z+4.5)-(Z+4.5)+log(S*2.50662827465);
+	}
+	return LG
+}
+
+function ncchisqdf(x,f,theta) {
+    with (Math) {
+    	var n=1;
+		var lam=theta/2;
+		var pois=exp(-lam);
+		var v=pois;
+		var x2=x/2;
+		var f2=f/2;
+		var t=pow(x2,f2)*exp(-x2-LogGamma(f2+1));
+		var chisq=v*t;
+		while (n<=(x-f)/2) {
+			pois=pois*lam/n;
+			v=v+pois;
+			t=t*x/(f+2*n);
+			chisq=chisq+v*t;
+			n=n+1;
+		}
+		while (t*x/(f+2*n-x)>.000001) {
+			pois=pois*lam/n;
+			v=v+pois;
+			t=t*x/(f+2*n);
+			chisq=chisq+v*t;
+			n=n+1;
+		}
+		return chisq
+    }
+}
+
+function compute(form) {
+    Z=eval(form.argument.value)
+    DF=eval(form.df.value)
+    Theta=eval(form.theta.value)
+    with (Math) {
+		if (DF<=0) {
+			alert("degrees of freedom must be positive")
+		} else if (Theta<0) {
+			alert("Noncentrality parameter must be non-negative")
+		} else if (Z<=0) {
+			Ncchisq=0
+		} else {
+			Ncchisq=ncchisqdf(Z,DF,Theta)
+		}
+		Ncchisq=round(Ncchisq*100000)/100000;
+	}
+    form.result.value = Ncchisq;
+}
+// done hiding from old browsers -->
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<center>
+<hr size=5>
+<h1>NonCentral Chi-Square Distribution Function</h1>
+<i>JavaScript</i>
+<hr size=5>
+
+<FORM>
+<pre>
+      Enter NonCentral Chi-Square Arguments
+
+                x-value: <INPUT TYPE="text" NAME="argument" Value="2" SIZE=15>
+     Degrees of Freedom: <INPUT TYPE="text" NAME="df" Value="2" SIZE=15>
+Noncentrality Parameter: <INPUT TYPE="text" NAME="theta" Value="0" SIZE=15>
+</pre>
+
+<BR>
+ NonCentral Chi-Square Probability :
+<INPUT TYPE="text" NAME="result" SIZE=20>
+<INPUT TYPE="button" VALUE="Calculate" ONCLICK="compute(this.form)">
+<BR>
+</FORM>
+<hr>
+The non-central chi-square distribution with n degrees of freedom and<br>
+non-centrality parameter, &gamma;<sup>2</sup>, is the distribution of the sum<br>
+of the squares of n independent normal random variables with unit 
+variances.<br>
+The non-centrality parameter is equal to the sum of squares of the means<br>
+of the variables.  When &gamma;<sup>2</sup> = 0, this reduces to the 
+(central)<br>
+chi-square distribution. For example, NCChiSquare(2,2,0) = 1 - 1/e = 
+.63212.
+
+</center>
+</BODY>
+</HTML>
+
+
+

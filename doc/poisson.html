@@ -1,0 +1,123 @@
+<HTML>                                                           
+<HEAD>
+<title>JavaScript - Poisson Distribution Function</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- hide this script tag's contents from old browsers
+function LogGamma(Z) {
+	with (Math) {
+		var S=1+76.18009173/Z-86.50532033/(Z+1)+24.01409822/(Z+2)-1.231739516/(Z+3)+.00120858003/(Z+4)-.00000536382/(Z+5);
+		var LG= (Z-.5)*log(Z+4.5)-(Z+4.5)+log(S*2.50662827465);
+	}
+	return LG
+}
+
+function Gcf(X,A) {        // Good for X>A+1
+	with (Math) {
+		var A0=0;
+		var B0=1;
+		var A1=1;
+		var B1=X;
+		var AOLD=0;
+		var N=0;
+		while (abs((A1-AOLD)/A1)>.00001) {
+			AOLD=A1;
+			N=N+1;
+			A0=A1+(N-A)*A0;
+			B0=B1+(N-A)*B0;
+			A1=X*A0+N*A1;
+			B1=X*B0+N*B1;
+			A0=A0/B1;
+			B0=B0/B1;
+			A1=A1/B1;
+			B1=1;
+		}
+		var Prob=exp(A*log(X)-X-LogGamma(A))*A1;
+	}
+	return 1-Prob
+}
+
+function Gser(X,A) {        // Good for X<A+1.
+    with (Math) {
+		var T9=1/A;
+		var G=T9;
+		var I=1;
+		while (T9>G*.00001) {
+			T9=T9*X/(A+I);
+			G=G+T9;
+			I=I+1;
+		}
+		G=G*exp(A*log(X)-X-LogGamma(A));
+    }
+    return G
+}
+
+function Gammacdf(x,a) {
+	var GI;
+	if (x<=0) {
+		GI=0
+	} else if (x<a+1) {
+		GI=Gser(x,a)
+	} else {
+		GI=Gcf(x,a)
+	}
+	return GI
+}
+
+function compute(form) {
+    Z=eval(form.argument.value)
+    Lam=eval(form.lambda.value)
+	if (Lam<=0) {
+		alert("Lambda must be positive.");
+	} else if (Z<0) {
+		Poiscdf=0
+	} else {
+		Z=Math.floor(Z)
+		Poiscdf=1-Gammacdf(Lam,Z+1);
+	}
+	Poiscdf=Math.round(Poiscdf*100000)/100000;
+    form.result.value = Poiscdf;
+}
+// done hiding from old browsers -->
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<center>
+<hr size=5>
+<h1>Poisson Distribution Function</h1>
+<i>JavaScript</i>
+<hr size=5>
+
+<FORM>
+<pre>
+      Enter Poisson Distribution Arguments
+
+          x-value: <INPUT TYPE="text" NAME="argument" Value="1" SIZE=15>
+           &lambda;: <INPUT TYPE="text" NAME="lambda" Value="1" SIZE=15>
+</pre>
+
+<BR>
+ Poisson P(X<=x|&lambda;) :
+<INPUT TYPE="text" NAME="result" SIZE=21>
+<INPUT TYPE="button" VALUE="Calculate" ONCLICK="compute(this.form)">
+<BR>
+</FORM>
+<hr>
+If items arrive at times 0< t<sub>1</sub> < t<sub>2</sub> < ... such that the interarrival 
+times,<br> 
+t<sub>1</sub>, t<sub>2</sub>-t<sub>1</sub>, t<sub>3</sub>-t<sub>2</sub>, ... are independent with exponential distributions, 
+E(1),<br>
+then the number of arrivals that occur in the time interval (0,&lambda;)<br> 
+has the Poisson distribution, P(&lambda;). This distribution has mean <br>
+&lambda;, variance &lambda;, and probability mass function,
+<p>
+f(x | &lambda;) = e<sup>-&lambda;</sup> &lambda;<sup>x</sup>/x!  for x = 
+0,1,2,...
+<p>
+For the distribution function, we have as an example,<br>
+P(x<=1| 1) = 1/e + 1/e = .73576
+
+</BODY>
+</HTML>
+

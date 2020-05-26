@@ -1,0 +1,109 @@
+<HTML>                                                           
+<HEAD>
+<title>JavaScript - Bivariate Normal Distribution Function</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- hide this script tag's contents from old browsers
+
+function normalcdf(X){   //HASTINGS.  MAX ERROR = .000001
+	var T=1/(1+.2316419*Math.abs(X));
+	var D=.3989423*Math.exp(-X*X/2);
+	var Prob=D*T*(.3193815+T*(-.3565638+T*(1.781478+T*(-1.821256+T*1.330274))));
+	if (X>0) {Prob=1-Prob}
+	return Prob
+}   
+
+function binormalcdf(x,y,R){    //PX>x,Y>y;R)
+    with (Math){
+		var s=(1-normalcdf(x))*(1-normalcdf(y));
+		var sqr2pi=sqrt(2*PI);
+		var h0=exp(-x*x/2)/sqr2pi;
+		var k0=exp(-y*y/2)/sqr2pi;
+		var h1=-x*h0;
+		var k1=-y*k0;
+		var factor=R*R/2;
+		s=s+R*h0*k0+factor*h1*k1;
+		var n=2;
+		while ((n*(1-abs(R))<5)&&(n<101)) {
+			factor=factor*R/(n+1);
+			h2=-x*h1-(n-1)*h0;
+			k2=-y*k1-(n-1)*k0;
+			s=s+factor*h2*k2;
+			h0=h1;
+			k0=k1;
+			h1=h2;
+			k1=k2;
+			n=n+1;
+		}
+		var v=0;
+		if (R>.95) {
+			v=1-normalcdf(max(h,k))
+			s=v+20*(s-v)*(1-R);
+		} else if ((R<-.95)&&(h+k<0)) {
+			v=abs(normalcdf(h)-normalcdf(k))
+			s=v+20*(s-v)*(1+R);
+		}
+    }
+    return s;
+}
+
+function compute(form) {
+    X=eval(form.xarg.value)
+    Y=eval(form.yarg.value)
+    M1=eval(form.xmean.value)
+    M2=eval(form.ymean.value)
+    S1=eval(form.xstdv.value)
+    S2=eval(form.ystdv.value)
+    R=eval(form.corr.value)
+    Prob="NaN";
+    if ((S1<=0)||(S2<=0)){
+        alert("The standard deviations must be positive.")
+    } else if ((R<-1)||(R>1)){
+        alert("The correlation coefficient must be between -1 and +1.");
+    } else {
+	    h=-(X-M1)/S1;
+	    k=-(Y-M2)/S2;
+	    Prob=binormalcdf(h,k,R);
+	    Prob=Math.round(100000*Prob)/100000;
+	}
+    form.result.value = Prob;
+}
+// done hiding from old browsers -->
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<center>
+<hr size=5>
+<h1>Bivariate Normal Distribution Function</h1>
+<i>JavaScript</i>
+<hr size=5>
+
+<FORM>
+<pre>
+      Enter Bivariate Normal Distribution Arguments
+
+                 x-value: <INPUT TYPE="text" NAME="xarg" VALUE="0" SIZE=15>
+                 y-value: <INPUT TYPE="text" NAME="yarg" VALUE="0" SIZE=15>
+               mean of x: <INPUT TYPE="text" NAME="xmean" VALUE="0" SIZE=15>
+               mean of y: <INPUT TYPE="text" NAME="ymean" VALUE="0" SIZE=15>
+ standard deviation of x: <INPUT TYPE="text" NAME="xstdv" VALUE="1" SIZE=15>
+ standard deviation of y: <INPUT TYPE="text" NAME="ystdv" VALUE="1" SIZE=15>
+ Correlation Coefficient: <INPUT TYPE="text" NAME="corr" VALUE=".5" SIZE=15>
+</pre>
+
+<BR>
+ Bivariate Normal Probability :
+<INPUT TYPE="text" NAME="result" SIZE=20>
+<INPUT TYPE="button" VALUE="Calculate" ONCLICK="compute(this.form)">
+<BR>
+</FORM>
+<hr>
+
+For example, bivarnormal(0,0,0,0,1,1,.5)=.33333
+ 
+</center>
+</BODY>
+</HTML>
+
+

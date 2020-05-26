@@ -1,0 +1,110 @@
+<HTML>                                                           
+<HEAD>
+<title>Run Test</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- hide this script tag's contents from old browsers
+
+
+function runcdf(r,m,n) {    //best if m<=n
+    var i=1,k=1,p=2,s=2;
+	while (2*i<r) {
+		while ((s>1)&&(k<=m)) {
+			s=s*k/(n+k);
+			p=p*k/(n+k);
+			k=k+1
+		}
+		s=s+p*(n+m-2*i)/(2*i)
+		if (2*i+1>=r) {
+			break
+		}
+		p=p*(m-i)*(n-i)/i/i;
+		s=s+p;
+		i=i+1
+    }
+    while (k<=m) {
+    	s=s*k/(n+k);
+		k=k+1
+    }
+    return s
+}
+
+function compute(form) {
+    var Prob,temp;
+    r=Math.floor(eval(form.argument.value));
+    m=Math.floor(eval(form.sample1.value));
+    n=Math.floor(eval(form.sample2.value));
+    if ((n>0)&&(m>0)) {
+	    if (r<2) {
+		    Prob=0
+	    } else if (m>n) {
+			if (r>=2*n+1) {
+				Prob=1
+			} else {
+				Prob=runcdf(r,n,m)
+			}
+	    } else {
+			if (r>=2*m+1) {
+		        Prob=1
+	        } else {
+                Prob=runcdf(r,m,n)
+	        }
+	    }
+	    Prob=Math.round(Prob*100000)/100000;
+        form.result.value = Prob;
+    } else {
+    	Prob="";
+        form.result.value = Prob;
+    	alert("m and n must be positive integers")
+    }
+}
+
+// done hiding from old browsers -->
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<center>
+<hr size=5>
+<h1>The Run Test</h1>
+<i>JavaScript</i>
+<hr size=5>
+Given a random sequence, X<sub>1</sub>,...,X<sub>N</sub>, of 0's and 1's,<br>
+the run test tests the null hypothesis that the variables<br>
+are independent Bernoulli with some unknown probability, p, of a 1.<br>
+The run test is based on the conditional distribution of the variables,<br>
+given the number, m, of 0's and the number, n, of 1's,<br>
+and so the null distribution is independent of p.<br>
+The run test  statistic, R<sub>m,n</sub>, is the number of runs in the 
+sequence,
+<br>where a run is a consecutive subsequence of the same value.<br>
+
+<hr>
+
+<FORM>
+<pre>
+      Enter m and n and the cutoff point.
+
+     No. of 0's m: <INPUT TYPE="text" NAME="sample1" Value="10" SIZE=15>
+     No. of 1's n: <INPUT TYPE="text" NAME="sample2" Value="11" SIZE=15>
+          r-value: <INPUT TYPE="text" NAME="argument" Value="11" SIZE=15>
+</pre>
+
+<BR>
+P(R<sub>m,n</sub> <= r) :
+<INPUT TYPE="text" NAME="result" SIZE=20>
+<INPUT TYPE="button" VALUE="Calculate" ONCLICK="compute(this.form)">
+<BR>
+</FORM>
+<hr>
+The probabilities calculated here are for R<sub>m,n</sub>, under the null 
+hypothesis<br>
+that all orderings of m 0's and n 1's are equally likely.<br>
+Computation time is proportional to r+min(m,n).
+
+
+
+</center>
+</BODY>
+</HTML>
+

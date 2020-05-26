@@ -1,0 +1,140 @@
+<HTML>                                                           
+<HEAD>
+<title>Rank-Sum Test</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- hide this script tag's contents from old browsers
+
+var c=[];
+var u,m,n;
+
+for (var i=0;i<=20;i++) {
+	c [i]=[];
+	for (var j=0;j<=20;j++) {
+		c[i][j]=[];
+	}
+}
+for (var i=1;i<=20;i++) {
+	c[0][i][0]=1;
+	c[i][0][0]=1;
+}
+for (i=1;i<=20;i++) {
+	for (j=1;j<=20;j++) {
+		for (k=0;k<=i-1;k++) {
+			c[i][j][k]=c[i-1][j][k];
+		}
+		for (k=i;k<=i*j-j;k++) {
+			c[i][j][k]=c[i-1][j][k]+c[i][j-1][k-i];
+		}
+		for (k=i*j-j+1;k<=i*j;k++) {
+			c[i][j][k]=c[i][j-1][k-i]
+		}
+	}
+}
+
+function normalcdf(X){   //HASTINGS.  MAX ERROR = .000001
+	var T=1/(1+.2316419*Math.abs(X));
+	var D=.3989423*Math.exp(-X*X/2);
+	var Prob=D*T*(.3193815+T*(-.3565638+T*(1.781478+T*(-1.821256+T*1.330274))));
+	if (X>0) {
+		Prob=1-Prob
+	}
+	return Prob
+}
+
+function comb(n,k) {
+    if (k>n/2) {
+    	k=n-k
+    }
+    var prod=1
+    for (var j=1;j<=k;j++) {
+		var prod=prod*(n+1-j)/j
+    }
+    return prod
+}
+
+function freqtable() {
+}
+
+function compute(form) {
+    var Prob,tot,sum,i,mean,variance,z;
+    u=Math.floor(eval(form.argument.value));
+    m=Math.floor(eval(form.sample1.value));
+    n=Math.floor(eval(form.sample2.value));
+	if ((m<1)||(n<1)) {
+		alert("Sample sizes must be positive");
+	} else if (u<0) {
+		Prob=0
+	} else if (u>=m*n) {
+		Prob=1
+	} else if ((m<21)&&(n<21)) {
+		tot=comb(m+n,m);
+		sum=0;
+		for (i=0;i<=u;i++) {
+			sum=sum+c[m][n][i];
+		}
+		Prob=sum/tot;
+	} else {
+		mean=m*n/2;
+		variance=m*n*(m+n+1.4)/12;
+		z=(u-mean+.5)/Math.sqrt(variance);
+		Prob=normalcdf(z);
+	}
+	Prob=Math.round(Prob*100000)/100000;
+    form.result.value = Prob;
+}
+
+// done hiding from old browsers -->
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<center>
+<hr size=5>
+<h1>Wilcoxon-Mann-Whitney Test</h1>
+<i>JavaScript</i>
+<hr size=5>
+Given two samples, X<sub>1</sub>,...,X<sub>m</sub>, and 
+Y<sub>1</sub>,...,Y<sub>n</sub>, from continuous distributions F and G,<br>
+the Wilcoxon rank-sum statistic, R<sub>m,n</sub>, for testing the equality of 
+F and G is defined<br>
+as the sum of the ranks of the X's when all m+n observations 
+are ranked<br>
+from smallest to largest.  The related statistic, U<sub>m,n</sub>, of Mann 
+and Whitney<br>
+is the number of pairs, (X<sub>i</sub>,Y<sub>j</sub>),
+with X<sub>i</sub> less than Y<sub>j</sub>.  <br>
+These statistics are related by R<sub>m,n</sub> = U<sub>m,n</sub> + m(m+1)/2.
+<hr>
+
+<FORM>
+<pre>
+      Enter sample sizes and cutoff point.
+
+    Sample size m: <INPUT TYPE="text" NAME="sample1" Value="11" SIZE=15>
+    Sample size n: <INPUT TYPE="text" NAME="sample2" Value="11" SIZE=15>
+          u-value: <INPUT TYPE="text" NAME="argument" Value="60" SIZE=15>
+</pre>
+
+<BR>
+P(U<sub>m,n</sub> <= u) :
+<INPUT TYPE="text" NAME="result" SIZE=20>
+<INPUT TYPE="button" VALUE="Calculate" ONCLICK="compute(this.form)">
+<BR>
+</FORM>
+<hr>
+The probabilities calculated here are for U<sub>m,n</sub>, under the null 
+hypothesis, F=G.<br> 
+The distribution of U<sub>m,n</sub> is symmetric on the interval from 0 to mn.<br>
+It has mean mn/2 and variance mn(m+n+1)/12.
+<p>
+If both m and n are less than or equal to 20, the probabilities are 
+calculated exactly.<br>
+Otherwise, a normal approximation with continuity correction is used.<br>
+This approximation has maximum absolute error at most .001 when m,n > 20.
+
+
+</center>
+</BODY>
+</HTML>
+

@@ -1,0 +1,138 @@
+<HTML>                                                           
+<HEAD>
+<title>JavaScript - F Distribution Function</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- hide this script tag's contents from old browsers
+function LogGamma(Z) {
+	with (Math) {
+		var S=1+76.18009173/Z-86.50532033/(Z+1)+24.01409822/(Z+2)-1.231739516/(Z+3)+.00120858003/(Z+4)-.00000536382/(Z+5);
+		var LG= (Z-.5)*log(Z+4.5)-(Z+4.5)+log(S*2.50662827465);
+	}
+	return LG
+}
+
+function Betinc(X,A,B) {
+	var A0=0;
+	var B0=1;
+	var A1=1;
+	var B1=1;
+	var M9=0;
+	var A2=0;
+	var C9;
+	while (Math.abs((A1-A2)/A1)>.00001) {
+		A2=A1;
+		C9=-(A+M9)*(A+B+M9)*X/(A+2*M9)/(A+2*M9+1);
+		A0=A1+C9*A0;
+		B0=B1+C9*B0;
+		M9=M9+1;
+		C9=M9*(B-M9)*X/(A+2*M9-1)/(A+2*M9);
+		A1=A0+C9*A1;
+		B1=B0+C9*B1;
+		A0=A0/B1;
+		B0=B0/B1;
+		A1=A1/B1;
+		B1=1;
+	}
+	return A1/A
+}
+
+function Betacdf(Z,A,B) {
+	with (Math) {
+		var Bcdf;
+		var S=A+B;
+		var BT=exp(LogGamma(S)-LogGamma(B)-LogGamma(A)+A*log(Z)+B*log(1-Z));
+		if (Z<(A+1)/(S+2)) {
+			Bcdf=BT*Betinc(Z,A,B)
+		} else {
+			Bcdf=1-BT*Betinc(1-Z,B,A)
+		}
+	}
+	return Bcdf
+}
+
+function Fcdf(V1,V2,X) {
+	var U=X/(X+V2/V1);
+	return Betacdf(U,(V1/2),(V2/2))
+}
+
+function compute(form) {
+    X=eval(form.argument.value)
+    f1=eval(form.f1.value)
+    f2=eval(form.f2.value)
+    GSQ=eval(form.ncp.value)
+    with (Math) {
+		if (f1<=0) {
+			alert("Numerator degrees of freedom must be positive")
+		} else if (f2<=0) {
+			alert("Denominator degrees of freedom must be positive") 
+		} else if (GSQ<0) {
+			alert("Noncentrality Parameter must be nonnegative") 
+		} else if (X<=0) {
+			Fcdf=0
+		} else {
+			Lam=GSQ/2;
+			Pois=exp(-Lam);
+			P=Pois*Fcdf(f1,f2,X);
+			J=0;
+			Z=X*f1;
+			while (J<Lam+3*sqrt(Lam)) {
+				J=J+1;
+				f1=f1+2;
+				Pois=Pois*Lam/J;
+				P=P+Pois*Fcdf(f1,f2,Z/f1);
+			}
+			ncFcdf=P;
+		}
+		ncFcdf=round(ncFcdf*100000)/100000;
+	}
+    form.result.value = ncFcdf;
+}
+// done hiding from old browsers -->
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<center>
+<hr size=5>
+<h1>Noncentral F Distribution Function</h1>
+<i>JavaScript</i>
+<hr size=5>
+
+<FORM>
+<pre>
+         Enter Noncentral F Distribution Function Arguments
+
+                x-value: <INPUT TYPE="text" NAME="argument" Value="1.0" SIZE=15>
+           Numerator df: <INPUT TYPE="text" NAME="f1" Value="2" SIZE=15>
+         Denominator df: <INPUT TYPE="text" NAME="f2" Value="2" SIZE=15>
+Noncentrality Parameter: <INPUT TYPE="text" NAME="ncp" Value="2" SIZE=15>
+</pre>
+
+<BR>
+ Noncentral F Probability :
+<INPUT TYPE="text" NAME="result" SIZE=20>
+<INPUT TYPE="button" VALUE="Calculate" ONCLICK="compute(this.form)">
+<BR>
+</FORM>
+<hr>
+The non-central F-distribution with f<sub>1</sub> and f<sub>2</sub> degrees of 
+freedom and<br> 
+noncentrality parameter, &gamma;<sup>2</sup>, is defined to be the distribution of the ratio
+<p>
+F = (X<sub>1</sub>/f<sub>1</sub>)/(X<sub>2</sub>/f<sub>2</sub>),
+<p>
+where X<sub>1</sub> and X<sub>2</sub> are independent random variables with 
+X<sub>1</sub> having<br>
+a non-central chi-square distribution with f<sub>1</sub> degrees of freedom<br>
+and noncentrality parameter, &gamma;<sup>2</sup>, and X<sub>2</sub> having a central<br>
+chi-square distribution with f<sub>2</sub> degrees of freedom.
+<p>
+
+For example, NoncentralF(1,2,2,0)=.5.
+
+</center>
+</BODY>
+</HTML>
+
+
